@@ -1,0 +1,19 @@
+{
+  "name": "nit",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Raphael Arce <raphael.arce@ts.berlin>",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/app": "15.1.6",
+    "@octokit/rest": "21.1.1",
+    "@octokit/webhooks": "13.8.0",
+    "dotenv": "16.5.0",
+    "express": "5.1.0",
+    "openai": "4.96.0"
+  }
+}
