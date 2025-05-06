@@ -6,20 +6,23 @@ export async function postReview({
 	repoName,
 	prNumber,
 	body,
+	comments,
 }: {
 	octokit: Octokit;
 	repoOwner: string;
 	repoName: string;
 	prNumber: number;
 	body: string;
+	comments?: { path: string; position?: number | undefined; body: string }[];
 }) {
 	try {
 		await octokit.rest.pulls.createReview({
 			owner: repoOwner,
 			repo: repoName,
 			pull_number: prNumber,
-			body,
 			event: 'COMMENT',
+			body,
+			comments,
 		});
 	} catch (error) {
 		console.error('Error posting review comment:', error);

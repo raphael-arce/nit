@@ -64,6 +64,8 @@ export async function handleWebhookEvent({
 		return;
 	}
 
+	console.log(`codeDiff: \n ${codeDiff}`);
+
 	const codeReview = await generateAIReview(codeDiff, mistralApiKey);
 
 	if (!codeReview) {
@@ -71,11 +73,29 @@ export async function handleWebhookEvent({
 		return;
 	}
 
-	await postReview({
-		octokit,
-		repoOwner,
-		repoName,
-		prNumber,
-		body: codeReview,
-	});
+	console.log(`Code Review: ${codeReview}`);
+
+	try {
+		const parsedReview = JSON.parse(codeReview);
+
+		await postReview({
+			octokit,
+			repoOwner,
+			repoName,
+			prNumber,
+			body: parsedReview.body,
+			comments: parsedReview.comments,
+		});
+	} catch (error) {
+		console.error('Error parsing AI review:', error);
+		await postReview({
+			octokit,
+			repoOwner,
+			repoName,
+			prNumber,
+			body: `_The AI returned an unparsable review. Here is the raw AI review:_
+			
+${codeReview}`,
+		});
+	}
 }
