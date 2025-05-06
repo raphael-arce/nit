@@ -1,5 +1,17 @@
 import { Octokit } from 'octokit';
 
+function addLineNumbers(patch: string | undefined) {
+	return patch
+		?.split('\n')
+		.map((line, index) => `${index}: ${line}`)
+		.join('\n');
+}
+
+function toConcatenatedDiff(file: { filename: string; patch?: string }) {
+	const patchWithLineNumbers = addLineNumbers(file.patch);
+	return `File: ${file.filename}\nPatch:\n${patchWithLineNumbers ?? 'No patch available'}`;
+}
+
 export async function getCodeDiff({
 	repoOwner,
 	repoName,
@@ -19,10 +31,7 @@ export async function getCodeDiff({
 			pull_number: prNumber,
 		});
 
-		const codeDiff = files
-			.map((file) => `File: ${file.filename}\nPatch:\n${file.patch ?? 'No patch available'}`)
-			.join('\n\n')
-			.trim();
+		const codeDiff = files.map(toConcatenatedDiff).join('\n\n').trim();
 
 		return codeDiff;
 	} catch (error) {
