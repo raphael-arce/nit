@@ -43,7 +43,7 @@ export default {
 				payload = JSON.parse(unparsedPayload);
 			} catch (error) {
 				console.error(error);
-				return new Response('Invalid payload.', { status: 400 });
+				return new Response('Invalid request.', { status: 400 });
 			}
 
 			await handleWebhookEvent({ eventName, payload, octokitApp, mistralApiKey });
@@ -51,6 +51,6 @@ export default {
 			return new Response(null, { status: 204 });
 		}
 
-		return new Response('Not Found', { status: 404 });
+		return new Response('Not Found.', { status: 404 });
 	},
 } satisfies ExportedHandler<Env>;
