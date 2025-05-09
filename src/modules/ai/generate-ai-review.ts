@@ -9,13 +9,13 @@ Objective: Improve code quality.
 
 Instructions:
 
-	Scope: Review the code with an emphasis on readability and simplicity. Ensure that the code is easy to understand and maintain.
+	Scope: Review the code with an emphasis on readability, simplicity and consistency. Ensure that the code is easy to understand and maintain.
 	
 	Standards and Guidelines: Follow the Airbnb JavaScript Style Guide.
 	
 	Feedback Format:
 			Provide feedback in the following format: { body: string, comments: { path: string, position: number, body: string }[] }
-			Only return a JSON object. 
+			Only return a JSON object.
 			Provide specific suggestions for improvement on specific lines of code via a comment object in the comment array.
 			If you can, provide an example on how to improve the code.
 			Don't repeat the original code. Keep explanations very short and concise.

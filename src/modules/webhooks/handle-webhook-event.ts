@@ -75,27 +75,11 @@ export async function handleWebhookEvent({
 
 	console.log(`Code Review: ${codeReview}`);
 
-	try {
-		const parsedReview = JSON.parse(codeReview);
-
-		await postReview({
-			octokit,
-			repoOwner,
-			repoName,
-			prNumber,
-			body: parsedReview.body,
-			comments: parsedReview.comments,
-		});
-	} catch (error) {
-		console.error('Error parsing AI review:', error);
-		await postReview({
-			octokit,
-			repoOwner,
-			repoName,
-			prNumber,
-			body: `_The AI returned an unparsable review. Here is the raw AI review:_
-			
-${codeReview}`,
-		});
-	}
+	await postReview({
+		octokit,
+		repoOwner,
+		repoName,
+		prNumber,
+		codeReview,
+	});
 }
